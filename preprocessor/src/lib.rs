@@ -1,4 +1,3 @@
-// use api_rs::preprocessor::{Normalisation, ProcessingOptions, TokenisationOptions};
 use ::std::default::Default;
 
 mod api;
@@ -6,7 +5,7 @@ mod normalisation;
 mod preprocess;
 mod tokenise;
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Preprocessor {
     pub(crate) processing_options: ProcessingOptions,
 }
@@ -18,6 +17,7 @@ impl Preprocessor {
     }
 }
 
+#[derive(Debug)]
 pub struct ProcessingOptions {
     pub tokenisation_options: TokenisationOptions,
     pub fold_case: bool,
@@ -36,6 +36,7 @@ impl Default for ProcessingOptions {
     }
 }
 
+#[derive(Debug)]
 pub struct TokenisationOptions {
     pub remove_numbers: bool,
     pub remove_coordinates: bool,
@@ -56,6 +57,7 @@ impl Default for TokenisationOptions {
     }
 }
 
+#[derive(Debug)]
 pub enum Normalisation {
     None,
     Stemming,
