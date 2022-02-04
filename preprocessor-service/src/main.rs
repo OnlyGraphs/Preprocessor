@@ -2,7 +2,7 @@ use api_rs::preprocessor::{
     preprocessor_server::{Preprocessor as ApiPreprocessor, PreprocessorServer as ApiServer}, PreprocessorRequest as ApiRequest,
     PreprocessorTextResponse as ApiResponse,
 };
-use log::{error, info, warn};
+use log::{error, info, warn, debug};
 use preprocessor::{Preprocessor, ProcessingOptions};
 use tonic::{transport::Server, Request, Response, Status};
 
@@ -24,8 +24,11 @@ impl ApiPreprocessor for PreprocessorService {
             raw_text,
             processing_options,
         } = request.into_inner();
+
+        debug!("Raw Text: {:?}\nProcessing Options: {:?}", raw_text, processing_options);
+
         let processing_options: ProcessingOptions = processing_options
-            .ok_or({
+            .ok_or_else(|| {
                 error!("{}", NO_PROCESSING_OPTIONS_MESSAGE);
                 Status::invalid_argument(NO_PROCESSING_OPTIONS_MESSAGE)
             })
@@ -54,11 +57,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Finished initalizing logging");
 
     info!("Creating the Preprocessor Service");
-    let port = std::env::var("PORT").unwrap_or({
+    let port = std::env::var("PORT").unwrap_or_else(|_|{
         warn!("Failed to read PORT, using 50051");
         "50051".to_string()
     });
-    let address = format!("[::1]:{port}").parse().map_err(|e: std::net::AddrParseError| {
+    let address = format!("0.0.0.0:{port}").parse().map_err(|e: std::net::AddrParseError| {
         error!("Failed to parse address: {:?}", e.to_string());
         e
     })?;
