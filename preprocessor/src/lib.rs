@@ -29,8 +29,8 @@ impl Default for ProcessingOptions {
     fn default() -> Self {
         ProcessingOptions {
             tokenisation_options: Default::default(),
-            fold_case: false,
-            remove_stop_words: false,
+            fold_case: true,
+            remove_stop_words: true,
             normalisation: Default::default(),
         }
     }
@@ -48,11 +48,11 @@ pub struct TokenisationOptions {
 impl Default for TokenisationOptions {
     fn default() -> Self {
         TokenisationOptions {
-            remove_numbers: false,
-            remove_coordinates: false,
-            remove_dates: false,
-            remove_special_characters: false,
-            remove_punctuation: false,
+            remove_numbers: true,
+            remove_coordinates: true,
+            remove_dates: true,
+            remove_special_characters: true,
+            remove_punctuation: true,
         }
     }
 }
