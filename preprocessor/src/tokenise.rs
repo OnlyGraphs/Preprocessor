@@ -13,10 +13,10 @@ impl Preprocessor {
 
         // let re = regex::Regex::new("[^a-zA-Z]+").expect("Invalid Regex");
         let re = regex::Regex::new("\\s+").expect("Invalid Regex");
-        let tokens = re.split(raw_text.as_str()).map(|s| s.to_string());
-
-        // Remove all of the zero length tokens
-        let tokens = tokens.filter(|s| s.len() > 0).collect::<Vec<String>>();
+        let tokens = re
+            .split(raw_text.as_str())
+            .map(|s| s.to_string())
+            .collect::<Vec<String>>();
 
         // Remove all of the numbers from each of the strings
         let tokens = remove_numbers
@@ -53,7 +53,7 @@ impl Preprocessor {
             .then(|| {
                 tokens
                     .iter()
-                    .map(|t| t.chars().filter(|c| !c.is_ascii()).collect())
+                    .map(|t| t.chars().filter(|c| c.is_ascii()).collect())
                     .collect()
             })
             .unwrap_or(tokens);
@@ -67,6 +67,12 @@ impl Preprocessor {
                     .collect()
             })
             .unwrap_or(tokens);
+
+        // Remove all of the zero length tokens
+        let tokens = tokens
+            .into_iter()
+            .filter(|s| s.len() > 0)
+            .collect::<Vec<String>>();
 
         tokens
     }
