@@ -8,12 +8,6 @@ mod tokenise;
 #[derive(Default, Debug)]
 pub struct Preprocessor;
 
-impl Preprocessor {
-    pub fn new() -> Self {
-        Self
-    }
-}
-
 #[derive(Debug)]
 pub struct ProcessingOptions {
     pub tokenisation_options: TokenisationOptions,

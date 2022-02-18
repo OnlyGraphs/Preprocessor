@@ -11,7 +11,6 @@ lazy_static::lazy_static! {
 
 impl Preprocessor {
     pub fn process<T: Into<ProcessingOptions>>(
-        &self,
         processing_options: T,
         raw_text: String,
     ) -> Vec<String> {
