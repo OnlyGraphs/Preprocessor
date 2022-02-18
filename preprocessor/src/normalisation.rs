@@ -19,21 +19,15 @@ impl Preprocessor {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Normalisation, Preprocessor, ProcessingOptions};
+    use crate::{Normalisation, Preprocessor};
 
     #[test]
     fn stem() {
-        let preprocessor = Preprocessor {
-            processing_options: ProcessingOptions {
-                normalisation: Normalisation::Stemming,
-                ..Default::default()
-            },
-        };
-        let result = preprocessor.normalise(vec![
-            "Throwing".to_string(),
-            "a".to_string(),
-            "ball.".to_string(),
-        ]);
+        let normalisation = Normalisation::Stemming;
+        let result = Preprocessor::normalise(
+            normalisation,
+            vec!["Throwing".to_string(), "a".to_string(), "ball.".to_string()],
+        );
         assert_eq!(
             result,
             vec!["Throw".to_string(), "a".to_string(), "ball.".to_string()]

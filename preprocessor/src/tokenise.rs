@@ -80,20 +80,20 @@ impl Preprocessor {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Preprocessor, ProcessingOptions};
+    use crate::{Preprocessor, TokenisationOptions};
 
     #[test]
     fn tokenise_split_white_space() {
-        let preprocessor: Preprocessor = Default::default();
-        let result = preprocessor.tokenise("Hello there".to_string());
+        let tokenisation_options = TokenisationOptions::default();
+        let result = Preprocessor::tokenise(tokenisation_options, "Hello there".to_string());
         assert_eq!(result, vec!["Hello".to_string(), "there".to_string()]);
     }
     #[test]
     fn tokenise_keep_punctuation() {
-        let mut processing_options: ProcessingOptions = Default::default();
-        processing_options.tokenisation_options.remove_punctuation = false;
-        let preprocessor: Preprocessor = Preprocessor::new(processing_options);
-        let result = preprocessor.tokenise("An example, sentence.".to_string());
+        let mut tokenisation_options = TokenisationOptions::default();
+        tokenisation_options.remove_punctuation = false;
+        let result =
+            Preprocessor::tokenise(tokenisation_options, "An example, sentence.".to_string());
         assert_eq!(
             result,
             vec![
