@@ -2,7 +2,7 @@ use crate::{Normalisation, Preprocessor};
 use rust_stemmers::{Algorithm, Stemmer};
 
 impl Preprocessor {
-    pub fn normalise(normalisation: Normalisation, tokens: Vec<String>) -> Vec<String> {
+    pub fn normalise(normalisation: &Normalisation, tokens: Vec<String>) -> Vec<String> {
         match normalisation {
             Normalisation::None => tokens,
             // TODO: Implement a specific normalisation for Lemmatisation
@@ -25,7 +25,7 @@ mod tests {
     fn stem() {
         let normalisation = Normalisation::Stemming;
         let result = Preprocessor::normalise(
-            normalisation,
+            &normalisation,
             vec!["Throwing".to_string(), "a".to_string(), "ball.".to_string()],
         );
         assert_eq!(

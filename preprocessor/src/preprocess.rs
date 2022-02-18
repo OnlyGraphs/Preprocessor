@@ -10,7 +10,7 @@ lazy_static::lazy_static! {
 }
 
 impl Preprocessor {
-    pub fn process<T: Into<ProcessingOptions>>(
+    pub fn process<'a, T: Into<&'a ProcessingOptions>>(
         processing_options: T,
         raw_text: String,
     ) -> Vec<String> {
@@ -22,8 +22,8 @@ impl Preprocessor {
         } = processing_options.into();
 
         let tokens = Self::tokenise(tokenisation_options, raw_text);
-        let tokens = Self::fold(fold_case, tokens);
-        let tokens = Self::stopping(remove_stop_words, tokens);
+        let tokens = Self::fold(*fold_case, tokens);
+        let tokens = Self::stopping(*remove_stop_words, tokens);
         let tokens = Self::normalise(normalisation, tokens);
         tokens
     }
@@ -55,7 +55,7 @@ mod tests {
     #[test]
     fn stem() {
         let normalisation = Normalisation::Stemming;
-        let result = Preprocessor::normalise(normalisation, vec![
+        let result = Preprocessor::normalise(&normalisation, vec![
             "Throwing".to_string(),
             "a".to_string(),
             "ball.".to_string(),

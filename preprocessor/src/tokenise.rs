@@ -1,7 +1,7 @@
 use crate::{Preprocessor, TokenisationOptions};
 
 impl Preprocessor {
-    pub fn tokenise(tokenisation_options: TokenisationOptions, raw_text: String) -> Vec<String> {
+    pub fn tokenise(tokenisation_options: &TokenisationOptions, raw_text: String) -> Vec<String> {
         let TokenisationOptions {
             remove_numbers,
             // remove_coordinates,
@@ -85,7 +85,7 @@ mod tests {
     #[test]
     fn tokenise_split_white_space() {
         let tokenisation_options = TokenisationOptions::default();
-        let result = Preprocessor::tokenise(tokenisation_options, "Hello there".to_string());
+        let result = Preprocessor::tokenise(&tokenisation_options, "Hello there".to_string());
         assert_eq!(result, vec!["Hello".to_string(), "there".to_string()]);
     }
     #[test]
@@ -93,7 +93,7 @@ mod tests {
         let mut tokenisation_options = TokenisationOptions::default();
         tokenisation_options.remove_punctuation = false;
         let result =
-            Preprocessor::tokenise(tokenisation_options, "An example, sentence.".to_string());
+            Preprocessor::tokenise(&tokenisation_options, "An example, sentence.".to_string());
         assert_eq!(
             result,
             vec![
