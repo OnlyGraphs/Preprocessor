@@ -80,7 +80,7 @@ impl Preprocessor {
 
 #[cfg(test)]
 mod tests {
-    use crate::Preprocessor;
+    use crate::{Preprocessor, ProcessingOptions};
 
     #[test]
     fn tokenise_split_white_space() {
@@ -90,7 +90,9 @@ mod tests {
     }
     #[test]
     fn tokenise_keep_punctuation() {
-        let preprocessor: Preprocessor = Default::default();
+        let mut processing_options: ProcessingOptions = Default::default();
+        processing_options.tokenisation_options.remove_punctuation = false;
+        let preprocessor: Preprocessor = Preprocessor::new(processing_options);
         let result = preprocessor.tokenise("An example, sentence.".to_string());
         assert_eq!(
             result,

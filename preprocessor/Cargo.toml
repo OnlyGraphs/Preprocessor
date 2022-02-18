@@ -11,3 +11,4 @@ api-rs = { git = "https://github.com/OnlyGraphs/api" }
 regex = "1.5.4"
 rust-stemmers = "1.2.0"
 stop-words = "0.6.2"
+lazy_static = "1.4.0"

@@ -1,4 +1,12 @@
 use crate::Preprocessor;
+use std::collections::HashSet;
+
+lazy_static::lazy_static! {
+    // Define the stop words as constant
+    static ref STOP_WORDS: HashSet<String> = HashSet::from_iter(
+        stop_words::get(stop_words::LANGUAGE::English)
+    );
+}
 
 impl Preprocessor {
     pub fn process(&self, raw_text: String) -> Vec<String> {
@@ -18,11 +26,10 @@ impl Preprocessor {
     }
 
     pub fn stopping(&self, tokens: Vec<String>) -> Vec<String> {
-        let stop_words = stop_words::get(stop_words::LANGUAGE::English);
         if self.processing_options.remove_stop_words {
             tokens
                 .into_iter()
-                .filter(|t| !stop_words.contains(t))
+                .filter(|t| !STOP_WORDS.contains(t))
                 .collect()
         } else {
             tokens
