@@ -1,7 +1,7 @@
 use crate::{Preprocessor, TokenisationOptions};
 
 impl Preprocessor {
-    pub fn tokenise(&self, raw_text: String) -> Vec<String> {
+    pub fn tokenise(tokenisation_options: TokenisationOptions, raw_text: String) -> Vec<String> {
         let TokenisationOptions {
             remove_numbers,
             // remove_coordinates,
@@ -9,7 +9,7 @@ impl Preprocessor {
             remove_special_characters,
             remove_punctuation,
             ..
-        } = self.processing_options.tokenisation_options;
+        } = tokenisation_options;
 
         // let re = regex::Regex::new("[^a-zA-Z]+").expect("Invalid Regex");
         let re = regex::Regex::new("\\s+").expect("Invalid Regex");

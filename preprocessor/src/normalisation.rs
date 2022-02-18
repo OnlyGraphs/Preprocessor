@@ -2,8 +2,8 @@ use crate::{Normalisation, Preprocessor};
 use rust_stemmers::{Algorithm, Stemmer};
 
 impl Preprocessor {
-    pub fn normalise(&self, tokens: Vec<String>) -> Vec<String> {
-        match self.processing_options.normalisation {
+    pub fn normalise(normalisation: Normalisation, tokens: Vec<String>) -> Vec<String> {
+        match normalisation {
             Normalisation::None => tokens,
             // TODO: Implement a specific normalisation for Lemmatisation
             Normalisation::Stemming | Normalisation::Lemmatisation => {

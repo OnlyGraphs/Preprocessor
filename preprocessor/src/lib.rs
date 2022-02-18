@@ -6,14 +6,11 @@ mod preprocess;
 mod tokenise;
 
 #[derive(Default, Debug)]
-pub struct Preprocessor {
-    pub(crate) processing_options: ProcessingOptions,
-}
+pub struct Preprocessor;
 
 impl Preprocessor {
-    pub fn new<T: Into<ProcessingOptions>>(options: T) -> Self {
-        let processing_options = options.into();
-        Self { processing_options }
+    pub fn new() -> Self {
+        Self
     }
 }
 

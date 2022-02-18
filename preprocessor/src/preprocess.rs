@@ -1,4 +1,5 @@
 use crate::Preprocessor;
+use crate::ProcessingOptions;
 use std::collections::HashSet;
 
 lazy_static::lazy_static! {
@@ -9,24 +10,35 @@ lazy_static::lazy_static! {
 }
 
 impl Preprocessor {
-    pub fn process(&self, raw_text: String) -> Vec<String> {
-        let tokens = self.tokenise(raw_text);
-        let tokens = self.fold(tokens);
-        let tokens = self.stopping(tokens);
-        let tokens = self.normalise(tokens);
+    pub fn process<T: Into<ProcessingOptions>>(
+        &self,
+        processing_options: T,
+        raw_text: String,
+    ) -> Vec<String> {
+        let ProcessingOptions {
+            tokenisation_options,
+            fold_case,
+            remove_stop_words,
+            normalisation,
+        } = processing_options.into();
+
+        let tokens = Self::tokenise(tokenisation_options, raw_text);
+        let tokens = Self::fold(fold_case, tokens);
+        let tokens = Self::stopping(remove_stop_words, tokens);
+        let tokens = Self::normalise(normalisation, tokens);
         tokens
     }
 
-    pub fn fold(&self, tokens: Vec<String>) -> Vec<String> {
-        if self.processing_options.fold_case {
+    pub fn fold(fold_case: bool, tokens: Vec<String>) -> Vec<String> {
+        if fold_case {
             tokens.iter().map(|t| t.to_lowercase()).collect()
         } else {
             tokens
         }
     }
 
-    pub fn stopping(&self, tokens: Vec<String>) -> Vec<String> {
-        if self.processing_options.remove_stop_words {
+    pub fn stopping(remove_stop_words: bool, tokens: Vec<String>) -> Vec<String> {
+        if remove_stop_words {
             tokens
                 .into_iter()
                 .filter(|t| !STOP_WORDS.contains(t))
