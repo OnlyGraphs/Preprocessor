@@ -14,6 +14,7 @@ pub struct ProcessingOptions {
     pub fold_case: bool,
     pub remove_stop_words: bool,
     pub normalisation: Normalisation,
+    pub remove_url: bool,
 }
 
 impl Default for ProcessingOptions {
@@ -23,6 +24,7 @@ impl Default for ProcessingOptions {
             fold_case: true,
             remove_stop_words: true,
             normalisation: Default::default(),
+            remove_url: true,
         }
     }
 }

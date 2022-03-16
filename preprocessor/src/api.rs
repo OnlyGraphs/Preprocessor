@@ -51,6 +51,7 @@ impl TryFrom<ApiProcessingOptions> for ProcessingOptions {
             fold_case,
             remove_stop_words,
             normalisation,
+            remove_url: true,
         })
     }
 }
